@@ -79,18 +79,28 @@ db.productos.find({ categoria:{$in} })
 // 15. Encuentra los productos que no pertenecen
 // a la categoría `informatica`.
 
+db.productos.find({ categoria: { $ne: "informatica" } })
+
 // 16. Busca productos que cuesten menos de 30 € o tengan
 // más de 50 unidades en stock.
 
+db.productos.find({ $or: [{ precio: { $lt: 30 } }, { stock: { $gt: 50 } }] })
+
 // 17. Encuentra productos cuyo precio no sea superior a 100 €.
+
+db.productos.find({ precio: { $not: { $gt: 100 } }})
 
 // 18. Localiza todos los productos cuyo nombre contenga
 // la palabra `móvil`, sin distinguir mayúsculas de minúsculas.
+
+db.productos.find({ nombre: { $regex: /móvil/} })
 
 // BLOQUE 3. CAMPOS, TIPOS Y ORDENACIÓN
 // ============================================================
 
 // 19. Encuentra los productos que tienen el campo `descuento`.
+
+
 
 // 20. Busca los productos que no tienen descuento definido.
 
