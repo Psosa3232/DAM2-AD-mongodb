@@ -38,7 +38,7 @@ db.productos.findOne()
 
 // 7. Descubre qué categorías de productos existen.
 
-db.productos.distinct("categoria")
+db.categorias.distinct("nombre")
 
 // 8. Muestra únicamente el nombre y el precio de todos los
 // productos, sin mostrar su _id.
@@ -51,7 +51,7 @@ db.productos.find({}, { _id: 0, nombre: 1, precio: 1 })
 
 // 9. Busca todos los productos de informática.
 
-db.productos.find({ categoria: "informatica" })
+db.productos.find({ categoriaId: "CAT01" })
 
 // 10. Encuentra los productos cuyo precio sea superior a 100 €.
 
@@ -74,12 +74,12 @@ db.productos.find({ stock: { $gt: 10 }, precio: { $lt: 100 } })
 // 14. Busca productos pertenecientes a las categorías
 // `audio` o `movil`.
 
-db.productos.find({ categoria:{$in} })
+db.productos.find({ categoriaId: {$in: [ "CAT02", "CAT03" ]}})
 
 // 15. Encuentra los productos que no pertenecen
 // a la categoría `informatica`.
 
-db.productos.find({ categoria: { $ne: "informatica" } })
+db.productos.find({ categoriaId: { $ne: "CAT01" } })
 
 // 16. Busca productos que cuesten menos de 30 € o tengan
 // más de 50 unidades en stock.
@@ -100,25 +100,42 @@ db.productos.find({ nombre: { $regex: /móvil/} })
 
 // 19. Encuentra los productos que tienen el campo `descuento`.
 
-
+db.productos.find({ descuento: { $exists: true } })
 
 // 20. Busca los productos que no tienen descuento definido.
+
+db.productos.find({ $or: [{ descuento: { $exists: false } }, { descuento: null }] })
 
 // 21. Comprueba qué productos tienen el precio almacenado
 // como número.
 
+db.productos.find({ precio: { $type: 'number'}})
+
 // 22. Encuentra los productos cuyo precio de venta
 // sea superior a su coste.
 
+db.productos.find({precio: {$gt: coste}})
+
 // 23. Ordena los productos del más barato al más caro.
+
+db.productos.find().sort({ precio: 1 })
+
 
 // 24. Obtén los tres productos más caros.
 
+db.productos.find().sort({ precio: -1 }).limit(3)
+
 // 25. Muestra los tres productos más baratos que tengan stock.
+
+db.productos.find().sort({precio: 1}).limit(3)
 
 // 26. Implementa una paginación que muestre tres productos
 // por página, ordenados por _id.
 // Obtén las páginas 1, 2 y 3.
+
+db.productos.find().sort({ _id: 1 }).skip(/*"Preguntar"*/).limit(3)
+
+
 
 // BLOQUE 4. INSERCIÓN Y ACTUALIZACIÓN
 // ============================================================
