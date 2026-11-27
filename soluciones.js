@@ -127,14 +127,15 @@ db.productos.find().sort({ precio: -1 }).limit(3)
 
 // 25. Muestra los tres productos más baratos que tengan stock.
 
-db.productos.find().sort({precio: 1}).limit(3)
+db.productos.find({stock: {$gt: 0}}).sort({precio: 1}).limit(3)
 
 // 26. Implementa una paginación que muestre tres productos
 // por página, ordenados por _id.
 // Obtén las páginas 1, 2 y 3.
 
-db.productos.find().sort({ _id: 1 }).skip(/*"Preguntar"*/).limit(3)
-
+db.productos.find().sort({ _id: 1 }).skip(0).limit(3)
+db.productos.find().sort({ _id: 1 }).skip(3).limit(3)
+db.productos.find().sort({ _id: 1 }).skip(6).limit(3)
 
 
 // BLOQUE 4. INSERCIÓN Y ACTUALIZACIÓN
@@ -144,14 +145,65 @@ db.productos.find().sort({ _id: 1 }).skip(/*"Preguntar"*/).limit(3)
 // 27. Inserta un producto nuevo con código, nombre, categoría,
 // precio, coste, stock y etiquetas.
 
+db.productos.insertOne({ codigo: 'P999', nombre: 'Prueba', categoria: 'Prueba', precio: 1000, coste: 25, stock: 10, etiquetas: [ "eco", "Calidad" ]})
+
 // 28. Inserta cinco productos adicionales en una única operación.
+
+db.productos.insertMany([
+    {
+        codigo: 'P900',
+        nombre: 'Objeto1',
+        categoria: 'Categoria1',
+        precio: 1,
+        coste: 0.8,
+        etiquetas: ["eco", "reutilizable"]
+    },
+    {
+        codigo: 'P901',
+        nombre: 'Objeto2',
+        categoria: 'Categoria1',
+        precio: 13,
+        coste: 8,
+        etiquetas: ["C", "si"]
+    },
+    {
+        codigo: 'P902',
+        nombre: 'Objeto3',
+        categoria: 'Categoria2',
+        precio: 33,
+        coste: 40,
+        etiquetas: ["B", "no"]
+    },
+    {
+        codigo: 'P903',
+        nombre: 'Objeto4',
+        categoria: 'Categoria2',
+        precio: 3,
+        coste: 0.4,
+        etiquetas: ["eco", "dale", "futbol"]
+    },
+    {
+        codigo: 'P904',
+        nombre: 'Objeto5',
+        categoria: 'Categoria2',
+        precio: 20,
+        coste: 10,
+        etiquetas: ["B", "reutilizable"]
+    }
+])
 
 // 29. Cambia el precio de uno de los productos insertados.
 
+
+
 // 30. Incrementa en 20 unidades su stock.
+
+
 
 // 31. Reduce el precio de todos los productos de una categoría
 // multiplicándolo por 0.9.
+
+
 
 // 32. Añade un campo `activo` con valor true
 // a todos los productos.
